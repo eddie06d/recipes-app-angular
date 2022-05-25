@@ -1,0 +1,52 @@
+<ng-container *ngIf="isLoading; else loggedIn">
+  <div class="flex justify-center">
+    <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
+</ng-container>
+<ng-template #loggedIn>
+  <a [routerLink]="['/home']" class="text-blue-400 text-xl font-semibold hover:underline">Go back</a>
+  <div class="flex flex-col gap-4 mt-4">
+    <h2 class="text-2xl font-semibold text-center">{{ recipe.title }}</h2>
+    <img src="{{ recipe.image ? recipe.image:'assets/no-image.jpg'}}" alt="img-recipe" class="mx-auto">
+    <div class="flex flex-wrap justify-around gap-2">
+      <div class="flex flex-col gap-2 items-center">
+        <div class="bg-red-500 rounded-full p-3">
+          <i class="fa-solid fa-heart-circle-check text-white fa-2x"></i>
+        </div>
+        <p class="font-semibold">Health score {{ recipe.healthScore }}</p>
+      </div>
+      <div class="flex flex-col gap-2 items-center">
+        <div class="bg-blue-500 rounded-full p-3">
+          <i class="fa-solid fa-thumbs-up text-white fa-2x"></i>
+        </div>
+        <p class="font-semibold">{{ recipe.aggregateLikes }} likes</p>
+      </div>
+      <div class="flex flex-col gap-2 items-center">
+        <div class="bg-purple-500 rounded-full p-3">
+          <i class="fa-solid fa-clock text-white fa-2x"></i>
+        </div>
+        <p class="font-semibold">Ready in {{ recipe.readyInMinutes }} minutes</p>
+      </div>
+      <div class="flex flex-col gap-2 items-center">
+        <div class="bg-orange-500 rounded-full p-3">
+          <i class="fa-solid fa-dollar-sign text-white fa-2x"></i>
+        </div>
+        <p class="font-semibold">Costs ${{ recipe.pricePerServing }}</p>
+      </div>
+      <a [href]="recipe.sourceUrl" target="_blank" class="flex flex-col gap-2 items-center">
+        <div class="bg-green-500 rounded-full p-3">
+          <i class="fa-solid fa-up-right-from-square text-white fa-2x"></i>
+        </div>
+        <p class="font-semibold">Blog</p>
+      </a>
+      <a [href]="recipe.spoonacularSourceUrl" target="_blank" class="flex flex-col gap-2 items-center">
+        <div class="bg-black rounded-full p-3">
+          <i class="fa-solid fa-anchor text-white fa-2x"></i>
+        </div>
+        <p class="font-semibold">Spoonacular</p>
+      </a>
+    </div>
+    <p id="sum">{{ fillSummary(recipe.summary) }}</p>
+  </div>
+</ng-template>
+
