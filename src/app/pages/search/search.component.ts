@@ -11,7 +11,8 @@ import Swal from 'sweetalert2';
 })
 export class SearchComponent implements OnInit {
   search: FormControl = new FormControl('');
-  results: any[] = [];
+  isLoading: boolean = false;
+  results?: any[];
 
   constructor(private recipeService: RecipeService) { }
 
@@ -21,9 +22,12 @@ export class SearchComponent implements OnInit {
       debounceTime(500),
       distinctUntilChanged(),
       filter(search => search.length > 2),
-      tap(search => this.recipeService.searchRecipesByName(search).subscribe((res: any) => {
+      tap(search => {
+        this.isLoading = true;
+        this.recipeService.searchRecipesByName(search).subscribe((res: any) => {
         this.results = res.results;
-      }))
+        this.isLoading = false;
+      })})
     ).subscribe();
   }
 
